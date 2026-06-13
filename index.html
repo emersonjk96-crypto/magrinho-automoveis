@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magrinho Automóveis - Barra/BA</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+<style>
+  html{scroll-behavior:smooth}
+
+  /* Card hover */
+  .car-card{transition:transform .25s ease,box-shadow .25s ease}
+  .car-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgba(0,0,0,.5)}
+  .car-card .card-img{transition:transform .4s ease;width:100%;height:100%;object-fit:cover}
+  .car-card:hover .card-img{transform:scale(1.06)}
+
+  /* Hero carousel */
+  .hero-slide{min-width:100%;height:100%;background-size:cover;background-position:center;position:relative}
+  .hero-slide::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,.75) 45%,rgba(0,0,0,.3) 100%)}
+
+  /* Ticker */
+  @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  .ticker-inner{display:flex;animation:ticker 22s linear infinite;white-space:nowrap}
+  .ticker-inner:hover{animation-play-state:paused}
+
+  /* WhatsApp pulse */
+  @keyframes wa-pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}70%{box-shadow:0 0 0 14px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+  .wa-pulse{animation:wa-pulse 2s infinite}
+
+  /* Fade up */
+  @keyframes fade-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fade-up .6s ease both}
+  .fade-up-2{animation:fade-up .6s .15s ease both}
+  .fade-up-3{animation:fade-up .6s .3s ease both}
+
+  /* Stars */
+  .stars{color:#FBBF24;letter-spacing:2px}
+
+  /* Filter buttons */
+  .filter-btn{background:transparent;border-color:#374151;color:#9CA3AF}
+  .filter-btn:hover{border-color:#DC2626;color:#fff}
+  .filter-btn.active{background:#DC2626;border-color:#DC2626;color:#fff}
+</style>
+</head>
+<body class="font-sans bg-gray-950 text-white antialiased">
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="bg-gray-950 sticky top-0 z-50 border-b border-gray-800">
+  <div class="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center">
+    <img src="logo.png" alt="Magrinho Automóveis" class="h-20 w-20 object-contain rounded-full">
+
+    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
+      <a href="#estoque" class="hover:text-white transition">Estoque</a>
+      <a href="#sobre" class="hover:text-white transition">Sobre</a>
+      <a href="#depoimentos" class="hover:text-white transition">Depoimentos</a>
+      <a href="#contato" class="hover:text-white transition">Contato</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="https://www.instagram.com/magrinhoautomoveis" target="_blank"
+         class="hidden sm:flex items-center gap-1.5 bg-gradient-to-r from-purple-600 to-pink-500 hover:opacity-90 px-3 py-2 rounded-lg text-sm font-semibold transition">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+      <a href="https://wa.me/557499677420?text=Olá! Vi o site e gostaria de mais informações" target="_blank"
+         class="flex items-center gap-1.5 bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-sm font-semibold transition">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════ TRUST SEAL ══════════════ -->
+<div class="bg-gray-900 border-b border-gray-800 text-center py-2 text-xs text-gray-400 tracking-wide">
+  ⭐ Mais de 500 veículos vendidos &nbsp;·&nbsp; 🚗 Procedência garantida &nbsp;·&nbsp; 📍 Barra/BA
+</div>
+
+<!-- ══════════════ HERO CAROUSEL ══════════════ -->
+<section class="relative overflow-hidden" style="height:580px">
+  <div id="heroSlider" class="flex h-full" style="transition:transform .7s ease">
+
+    <!-- Slide 1 -->
+    <div class="hero-slide" style="background-image:url('fundo2.png')">
+      <div class="relative max-w-6xl mx-auto px-4 h-full flex items-center">
+        <div class="max-w-xl fade-up-2">
+          <h1 class="text-4xl md:text-6xl font-black text-white leading-tight mb-4">
+            Seu próximo carro<br><span class="text-red-500">está aqui.</span>
+          </h1>
+          <p class="text-gray-300 text-lg mb-7">Carros revisados, com procedência e facilidade de pagamento.</p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#estoque" class="bg-red-600 hover:bg-red-500 text-white font-bold px-7 py-3.5 rounded-xl transition">Ver Estoque</a>
+            <a href="https://wa.me/557499677420?text=Olá! Vi o site" target="_blank"
+               class="flex items-center gap-2 border border-white/20 hover:bg-white/10 text-white font-semibold px-7 py-3.5 rounded-xl transition">
+              <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Falar agora
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1590362891991-f776e747a588?w=1400&q=80')">
+      <div class="relative max-w-6xl mx-auto px-4 h-full flex items-center">
+        <div class="max-w-xl">
+          <p class="text-red-400 font-semibold uppercase tracking-widest text-sm mb-3">Picapes e SUVs</p>
+          <h1 class="text-4xl md:text-6xl font-black text-white leading-tight mb-4">
+            As melhores<br><span class="text-red-500">picapes da região.</span>
+          </h1>
+          <p class="text-gray-300 text-lg mb-7">Hilux, L200, Ranger e muito mais no nosso estoque.</p>
+          <a href="#estoque" class="bg-red-600 hover:bg-red-500 text-white font-bold px-7 py-3.5 rounded-xl transition">Ver Estoque</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1400&q=80')">
+      <div class="relative max-w-6xl mx-auto px-4 h-full flex items-center">
+        <div class="max-w-xl">
+          <p class="text-red-400 font-semibold uppercase tracking-widest text-sm mb-3">Financiamento</p>
+          <h1 class="text-4xl md:text-6xl font-black text-white leading-tight mb-4">
+            Aprovamos seu<br><span class="text-red-500">crédito com facilidade.</span>
+          </h1>
+          <p class="text-gray-300 text-lg mb-7">Parcele seu carro com as melhores condições do mercado.</p>
+          <a href="https://wa.me/557499677420?text=Olá! Quero simular um financiamento" target="_blank"
+             class="bg-red-600 hover:bg-red-500 text-white font-bold px-7 py-3.5 rounded-xl transition">Simular Financiamento</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrows -->
+  <button onclick="heroSlide(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold transition z-10">‹</button>
+  <button onclick="heroSlide(1)"  class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold transition z-10">›</button>
+
+  <!-- Dots -->
+  <div id="heroDots" class="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+    <span class="w-2.5 h-2.5 rounded-full bg-white cursor-pointer" onclick="heroGoTo(0)"></span>
+    <span class="w-2.5 h-2.5 rounded-full bg-white/40 cursor-pointer" onclick="heroGoTo(1)"></span>
+    <span class="w-2.5 h-2.5 rounded-full bg-white/40 cursor-pointer" onclick="heroGoTo(2)"></span>
+  </div>
+</section>
+
+<!-- ══════════════ TICKER ══════════════ -->
+<div class="bg-red-700 py-2.5 overflow-hidden">
+  <div class="ticker-inner text-white text-sm font-semibold">
+    <span class="px-10">✔ Procedência garantida</span>
+    <span class="px-10">💳 Financiamento facilitado</span>
+    <span class="px-10">🔄 Aceitamos troca</span>
+    <span class="px-10">📍 Atendimento em Barra/BA</span>
+    <span class="px-10">⭐ +500 veículos vendidos</span>
+    <span class="px-10">✔ Procedência garantida</span>
+    <span class="px-10">💳 Financiamento facilitado</span>
+    <span class="px-10">🔄 Aceitamos troca</span>
+    <span class="px-10">📍 Atendimento em Barra/BA</span>
+    <span class="px-10">⭐ +500 veículos vendidos</span>
+  </div>
+</div>
+
+<!-- ══════════════ BENEFÍCIOS ══════════════ -->
+<div class="bg-gray-900 border-b border-gray-800">
+  <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700 text-center">
+      <p class="text-2xl mb-2">✔️</p>
+      <p class="font-bold text-white text-sm">Procedência garantida</p>
+      <p class="text-gray-500 text-xs mt-1">Laudo cautelar em todos</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700 text-center">
+      <p class="text-2xl mb-2">💳</p>
+      <p class="font-bold text-white text-sm">Financiamento</p>
+      <p class="text-gray-500 text-xs mt-1">Aprovação facilitada</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700 text-center">
+      <p class="text-2xl mb-2">🔄</p>
+      <p class="font-bold text-white text-sm">Aceitamos troca</p>
+      <p class="text-gray-500 text-xs mt-1">Avaliação na hora</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700 text-center">
+      <p class="text-2xl mb-2">📱</p>
+      <p class="font-bold text-white text-sm">Atendimento WhatsApp</p>
+      <p class="text-gray-500 text-xs mt-1">Resposta rápida</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ESTOQUE ══════════════ -->
+<section id="estoque" class="py-16 px-4 bg-gray-950">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-10">
+      <span class="text-red-500 font-semibold text-sm uppercase tracking-widest">Estoque</span>
+      <h2 class="text-3xl md:text-4xl font-black text-white mt-1 mb-2">Veículos em Destaque</h2>
+      <p class="text-gray-400">Clique em um anúncio para ver mais fotos e detalhes.</p>
+    </div>
+    <!-- Filtros -->
+    <div class="flex flex-wrap gap-2 justify-center mb-8" id="filterBtns">
+      <button onclick="filterCars('todos')"  class="filter-btn active px-4 py-2 rounded-full text-sm font-semibold border transition">Todos</button>
+      <button onclick="filterCars('suv')"    class="filter-btn px-4 py-2 rounded-full text-sm font-semibold border transition">🚙 SUVs</button>
+      <button onclick="filterCars('picape')" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold border transition">🛻 Picapes</button>
+      <button onclick="filterCars('sedan')"  class="filter-btn px-4 py-2 rounded-full text-sm font-semibold border transition">🚗 Sedãs</button>
+      <button onclick="filterCars('hatch')"  class="filter-btn px-4 py-2 rounded-full text-sm font-semibold border transition">🚗 Hatchs</button>
+      <button onclick="filterCars('ate50k')" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold border transition">💰 Até R$ 50 mil</button>
+    </div>
+
+    <div id="carGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div class="text-center mt-10">
+      <p class="text-gray-400 mb-3">Não achou o que procurava? Fale com a gente!</p>
+      <a href="https://wa.me/557499677420?text=Olá! Estou procurando um carro específico. Pode me ajudar?" target="_blank"
+         class="inline-flex items-center gap-2 border border-gray-700 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-xl transition">
+        Ver todo o estoque →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ MODAL ══════════════ -->
+<div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
+  <div class="absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
+  <div class="relative bg-gray-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-700">
+    <div class="relative bg-black rounded-t-2xl overflow-hidden" style="height:300px">
+      <div id="modalSlides" class="flex h-full transition-transform duration-300"></div>
+      <button onclick="modalSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white w-9 h-9 rounded-full flex items-center justify-center text-xl font-bold transition">‹</button>
+      <button onclick="modalSlide(1)"  class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white w-9 h-9 rounded-full flex items-center justify-center text-xl font-bold transition">›</button>
+      <div id="modalDots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5"></div>
+      <span class="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">Destaque</span>
+      <button onclick="closeModal()" class="absolute top-3 right-3 bg-black/50 hover:bg-black/80 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg transition">×</button>
+    </div>
+    <div class="p-6">
+      <h3 id="modalName" class="text-2xl font-black text-white mb-1"></h3>
+      <p id="modalDesc" class="text-gray-400 mb-5 leading-relaxed"></p>
+      <div class="grid grid-cols-3 gap-3 mb-6">
+        <div class="bg-gray-800 rounded-xl p-3 text-center border border-gray-700">
+          <p class="text-xs text-gray-500 font-semibold uppercase mb-1">Ano</p>
+          <p id="modalYear" class="font-bold text-white"></p>
+        </div>
+        <div class="bg-gray-800 rounded-xl p-3 text-center border border-gray-700">
+          <p class="text-xs text-gray-500 font-semibold uppercase mb-1">Quilômetros</p>
+          <p id="modalKm" class="font-bold text-white"></p>
+        </div>
+        <div class="bg-gray-800 rounded-xl p-3 text-center border border-gray-700">
+          <p class="text-xs text-gray-500 font-semibold uppercase mb-1">Câmbio</p>
+          <p id="modalTrans" class="font-bold text-white"></p>
+        </div>
+      </div>
+      <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide mb-1">Preço</p>
+      <p id="modalPrice" class="text-3xl font-black text-white mb-5"></p>
+      <a id="modalWa" href="#" target="_blank"
+         class="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl transition text-lg">
+        📲 Tenho Interesse! Falar no WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DEPOIMENTOS ══════════════ -->
+<section id="depoimentos" class="py-16 px-4 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-10">
+      <span class="text-red-500 font-semibold text-sm uppercase tracking-widest">Depoimentos</span>
+      <h2 class="text-3xl md:text-4xl font-black text-white mt-1 mb-2">O que nossos clientes dizem</h2>
+      <p class="text-gray-400">Mais de 500 famílias satisfeitas em Barra e região</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+        <div class="stars text-xl mb-3">★★★★★</div>
+        <p class="text-gray-300 leading-relaxed mb-4">"Excelente atendimento! O Magrinho foi super honesto, me mostrou tudo sobre o carro e saí muito satisfeito. Recomendo demais!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center font-bold text-white">J</div>
+          <div>
+            <p class="font-semibold text-white text-sm">João Silva</p>
+            <p class="text-gray-500 text-xs">Barra, BA</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+        <div class="stars text-xl mb-3">★★★★★</div>
+        <p class="text-gray-300 leading-relaxed mb-4">"Carro impecável, exatamente como estava no anúncio. Processo rápido, financiamento aprovado no mesmo dia. Muito obrigada!"</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center font-bold text-white">M</div>
+          <div>
+            <p class="font-semibold text-white text-sm">Maria Souza</p>
+            <p class="text-gray-500 text-xs">Ibotirama, BA</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+        <div class="stars text-xl mb-3">★★★★★</div>
+        <p class="text-gray-300 leading-relaxed mb-4">"Comprei minha Hilux aqui e deu tudo certo. Atendimento pelo WhatsApp foi rápido, carro revisado e com toda documentação em ordem."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center font-bold text-white">C</div>
+          <div>
+            <p class="font-semibold text-white text-sm">Carlos Oliveira</p>
+            <p class="text-gray-500 text-xs">Barra, BA</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SOBRE ══════════════ -->
+<section id="sobre" class="bg-gray-950 py-16 px-4">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <span class="text-red-500 font-semibold text-sm uppercase tracking-widest">Quem somos</span>
+      <h2 class="text-3xl md:text-4xl font-black mt-2 mb-5">Magrinho Automóveis</h2>
+      <p class="text-gray-300 text-lg leading-relaxed mb-4">
+        Trabalhamos com carros revisados, com procedência garantida e facilidade de pagamento
+        para você realizar o sonho do seu próximo veículo.
+      </p>
+      <p class="text-gray-400 leading-relaxed">
+        Atendemos toda a região de Barra/BA com transparência e compromisso.
+        Nosso objetivo é que você saia satisfeito com o negócio e nos indique para os amigos!
+      </p>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 text-center">
+        <p class="text-4xl font-black text-red-500 mb-1 counter" data-target="500">0</p>
+        <p class="text-xs text-red-400 font-semibold mb-1">+</p>
+        <p class="text-gray-300 text-sm font-medium">Carros vendidos</p>
+      </div>
+      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 text-center">
+        <p class="text-4xl font-black text-red-500 mb-1 counter" data-target="300">0</p>
+        <p class="text-xs text-red-400 font-semibold mb-1">+</p>
+        <p class="text-gray-300 text-sm font-medium">Clientes satisfeitos</p>
+      </div>
+      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 text-center">
+        <p class="text-4xl font-black text-red-500 mb-1 counter" data-target="5">0</p>
+        <p class="text-xs text-red-400 font-semibold mb-1">anos</p>
+        <p class="text-gray-300 text-sm font-medium">No mercado</p>
+      </div>
+      <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 text-center">
+        <p class="text-4xl font-black text-red-500 mb-1"><span class="counter" data-target="49" data-decimal>0</span></p>
+        <p class="text-xs text-red-400 font-semibold mb-1">/ 5.0</p>
+        <p class="text-gray-300 text-sm font-medium">Avaliação média</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONTATO ══════════════ -->
+<section id="contato" class="py-16 px-4 bg-gray-900">
+  <div class="max-w-3xl mx-auto text-center">
+    <span class="text-red-500 font-semibold text-sm uppercase tracking-widest">Fale conosco</span>
+    <h2 class="text-3xl md:text-4xl font-black mt-2 mb-4">Pronto para fechar negócio?</h2>
+    <p class="text-gray-400 text-lg mb-10">Entre em contato agora mesmo. Respondemos rápido!</p>
+    <div class="grid sm:grid-cols-3 gap-4 mb-10">
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl p-5">
+        <p class="text-3xl mb-2">📍</p>
+        <p class="font-semibold text-white mb-1">Localização</p>
+        <p class="text-gray-400 text-sm">Barra, Bahia</p>
+      </div>
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl p-5">
+        <p class="text-3xl mb-2">🕒</p>
+        <p class="font-semibold text-white mb-1">Horário</p>
+        <p class="text-gray-400 text-sm">Seg a Sáb, 8h às 18h</p>
+      </div>
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl p-5">
+        <p class="text-3xl mb-2">📱</p>
+        <p class="font-semibold text-white mb-1">WhatsApp</p>
+        <p class="text-gray-400 text-sm">(74) 9967-7420</p>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="https://wa.me/557499677420?text=Olá! Vi o site e gostaria de mais informações" target="_blank"
+         class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-4 rounded-xl transition text-lg">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar no WhatsApp
+      </a>
+      <a href="https://www.instagram.com/magrinhoautomoveis" target="_blank"
+         class="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-500 hover:opacity-90 text-white font-bold px-8 py-4 rounded-xl transition text-lg">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Ver no Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="bg-gray-950 border-t border-gray-800 pt-12 pb-6 px-4">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mb-8">
+    <div>
+      <img src="logo.png" alt="Magrinho Automóveis" class="h-16 w-16 object-contain rounded-full mb-3">
+      <p class="text-gray-400 text-sm leading-relaxed">Referência em veículos seminovos em Barra/BA. Transparência, procedência e atendimento de qualidade.</p>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-4">Links Rápidos</h4>
+      <ul class="space-y-2 text-sm text-gray-400">
+        <li><a href="#estoque" class="hover:text-white transition">Estoque</a></li>
+        <li><a href="#depoimentos" class="hover:text-white transition">Depoimentos</a></li>
+        <li><a href="#sobre" class="hover:text-white transition">Sobre nós</a></li>
+        <li><a href="#contato" class="hover:text-white transition">Contato</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-4">Informações</h4>
+      <ul class="space-y-2 text-sm text-gray-400">
+        <li>📍 Barra, Bahia</li>
+        <li>📱 (74) 9967-7420</li>
+        <li>🕒 Seg a Sáb, 8h às 18h</li>
+        <li class="pt-2 flex gap-3">
+          <a href="https://wa.me/557499677420" target="_blank" class="text-green-400 hover:text-green-300 transition">WhatsApp</a>
+          <a href="https://www.instagram.com/magrinhoautomoveis" target="_blank" class="text-pink-400 hover:text-pink-300 transition">Instagram</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-gray-800 pt-6 text-center text-gray-600 text-sm">
+    © 2026 Magrinho Automóveis · Barra, Bahia · Todos os direitos reservados
+  </div>
+</footer>
+
+<!-- ══════════════ WHATSAPP FLUTUANTE ══════════════ -->
+<a href="https://wa.me/557499677420?text=Olá! Vi o site e gostaria de mais informações" target="_blank"
+   class="wa-pulse fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full shadow-lg flex items-center justify-center transition hover:scale-110"
+   title="Falar no WhatsApp">
+  <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+const WA = '557499677420';
+
+// ── Hero Carousel ──
+let hSlide = 0;
+const hTotal = 3;
+function heroSlide(dir) { heroGoTo((hSlide + dir + hTotal) % hTotal); }
+function heroGoTo(n) {
+  hSlide = n;
+  document.getElementById('heroSlider').style.transform = `translateX(-${hSlide*100}%)`;
+  document.getElementById('heroDots').querySelectorAll('span').forEach((d,i) => {
+    d.className = `w-2.5 h-2.5 rounded-full cursor-pointer ${i===hSlide?'bg-white':'bg-white/40'}`;
+  });
+}
+setInterval(() => heroSlide(1), 5000);
+
+// ── Cars Data ──
+const cars = [
+  {
+    name: 'Honda Civic 2018', year: '2018', km: '65.000 km', trans: 'Automático', price: 'R$ 65.900', priceNum: 65900, category: 'sedan',
+    desc: 'Sedan esportivo com motor 2.0 flex, central multimídia, câmera de ré e bancos em couro. Revisado e com laudo cautelar.',
+    photos: [
+      'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80',
+      'https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80',
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80'
+    ]
+  },
+  {
+    name: 'Fiat Argo 2020', year: '2020', km: '42.000 km', trans: 'Manual', price: 'R$ 58.500', priceNum: 58500, category: 'hatch',
+    desc: 'Hatch compacto e econômico com direção elétrica, ar-condicionado digital, vidros e travas elétricos. Único dono.',
+    photos: [
+      'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80',
+      'https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80',
+      'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80'
+    ]
+  },
+  {
+    name: 'Chevrolet Onix 2019', year: '2019', km: '51.000 km', trans: 'Manual', price: 'R$ 52.900', priceNum: 52900, category: 'hatch',
+    desc: 'Um dos hatchs mais vendidos do Brasil. Motor 1.0 econômico, ar-condicionado, direção elétrica e central multimídia.',
+    photos: [
+      'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80',
+      'https://images.unsplash.com/photo-1616788494672-ec7ca25fdda9?w=800&q=80',
+      'https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80'
+    ]
+  },
+  {
+    name: 'Toyota Corolla 2020', year: '2020', km: '38.000 km', trans: 'Automático', price: 'R$ 89.900', priceNum: 89900, category: 'sedan',
+    desc: 'Sedan premium com motor 2.0 flex, teto solar, bancos em couro, câmera 360° e controle de cruzeiro adaptativo. Estado de novo.',
+    photos: [
+      'https://images.unsplash.com/photo-1590362891991-f776e747a588?w=800&q=80',
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80',
+      'https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80'
+    ]
+  },
+  {
+    name: 'Hyundai HB20 2021', year: '2021', km: '28.000 km', trans: 'Manual', price: 'R$ 62.000', priceNum: 62000, category: 'hatch',
+    desc: 'Hatch moderno com design renovado, motor 1.0 turbo, central multimídia com Android Auto, Apple CarPlay e 6 airbags.',
+    photos: [
+      'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80',
+      'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80',
+      'https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80'
+    ]
+  },
+  {
+    name: 'Volkswagen Gol 2018', year: '2018', km: '70.000 km', trans: 'Manual', price: 'R$ 39.900', priceNum: 39900, category: 'hatch',
+    desc: 'Clássico e econômico. Motor 1.0 flex, direção hidráulica, ar-condicionado e rádio com Bluetooth. Ótima opção de entrada.',
+    photos: [
+      'https://images.unsplash.com/photo-1551830820-330a71b99659?w=800&q=80',
+      'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80',
+      'https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80'
+    ]
+  }
+];
+
+// ── Filtros ──
+function filterCars(type) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderCards(cars.filter(c => {
+    if (type === 'todos') return true;
+    if (type === 'ate50k') return c.priceNum <= 50000;
+    return c.category === type;
+  }));
+}
+
+// ── Render cards ──
+const cardSlideIdx = {};
+function renderCards(list) {
+  if (!list) list = cars;
+  const grid = document.getElementById('carGrid');
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="col-span-3 text-center text-gray-500 py-16">Nenhum veículo encontrado nessa categoria.</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(function(car) {
+    var idx = cars.indexOf(car);
+    cardSlideIdx[idx] = 0;
+    return '<div class="car-card bg-gray-900 rounded-2xl shadow-md overflow-hidden border border-gray-800 cursor-pointer" onclick="openModal(' + idx + ')">'
+      + '<div class="relative overflow-hidden" style="height:210px">'
+      + '<div id="cardSlides' + idx + '" class="flex h-full transition-transform duration-300">'
+      + car.photos.map(function(p){ return '<img src="' + p + '" class="card-img min-w-full" alt="' + car.name + '">'; }).join('')
+      + '</div>'
+      + '<button onclick="event.stopPropagation();cardSlide(' + idx + ',-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold transition">&#8249;</button>'
+      + '<button onclick="event.stopPropagation();cardSlide(' + idx + ',1)"  class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold transition">&#8250;</button>'
+      + '<div id="cardDots' + idx + '" class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">'
+      + car.photos.map(function(_,d){ return '<span class="w-1.5 h-1.5 rounded-full ' + (d===0?'bg-white':'bg-white/40') + '"></span>'; }).join('')
+      + '</div>'
+      + '<span class="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">Destaque</span>'
+      + '<span class="absolute top-3 right-3 bg-black/50 text-white text-xs px-2 py-0.5 rounded-full">' + car.photos.length + ' fotos</span>'
+      + '</div>'
+      + '<div class="p-4">'
+      + '<h3 class="font-bold text-lg text-white mb-1">' + car.name + '</h3>'
+      + '<div class="flex flex-wrap gap-2 text-gray-400 text-xs mb-3">'
+      + '<span class="bg-gray-800 px-2 py-1 rounded-lg">📅 ' + car.year + '</span>'
+      + '<span class="bg-gray-800 px-2 py-1 rounded-lg">🛣 ' + car.km + '</span>'
+      + '<span class="bg-gray-800 px-2 py-1 rounded-lg">⚙️ ' + car.trans + '</span>'
+      + '</div>'
+      + '<p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Preço</p>'
+      + '<p class="text-2xl font-black text-white mb-3">' + car.price + '</p>'
+      + '<div class="flex gap-2">'
+      + '<button onclick="event.stopPropagation();openModal(' + idx + ')" class="flex-1 border border-gray-700 hover:bg-gray-800 text-gray-300 font-semibold py-2 rounded-xl text-sm transition">Ver fotos e detalhes</button>'
+      + '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Olá! Tenho interesse no ' + car.name + ' anunciado no site. Pode me passar mais informações?') + '" target="_blank" onclick="event.stopPropagation()" class="flex-1 flex items-center justify-center gap-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-xl text-sm transition">📲 Tenho interesse</a>'
+      + '</div></div></div>';
+  }).join('');
+}
+
+function cardSlide(i, dir) {
+  const n = cars[i].photos.length;
+  cardSlideIdx[i] = (cardSlideIdx[i] + dir + n) % n;
+  document.getElementById('cardSlides'+i).style.transform = `translateX(-${cardSlideIdx[i]*100}%)`;
+  document.getElementById('cardDots'+i).querySelectorAll('span').forEach((d,j) => {
+    d.className = `w-1.5 h-1.5 rounded-full ${j===cardSlideIdx[i]?'bg-white':'bg-white/40'}`;
+  });
+}
+
+// ── Modal ──
+let modalCar = null, mSlide = 0;
+function openModal(i) {
+  modalCar = cars[i]; mSlide = 0;
+  document.getElementById('modalName').textContent = modalCar.name;
+  document.getElementById('modalDesc').textContent = modalCar.desc;
+  document.getElementById('modalYear').textContent = modalCar.year;
+  document.getElementById('modalKm').textContent = modalCar.km;
+  document.getElementById('modalTrans').textContent = modalCar.trans;
+  document.getElementById('modalPrice').textContent = modalCar.price;
+  document.getElementById('modalWa').href = `https://wa.me/${WA}?text=Olá! Tenho interesse no ${encodeURIComponent(modalCar.name)}. Pode me passar mais informações?`;
+  document.getElementById('modalSlides').innerHTML = modalCar.photos.map(p =>
+    `<img src="${p}" class="min-w-full h-full object-cover" alt="${modalCar.name}">`).join('');
+  renderModalDots();
+  document.getElementById('modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() { document.getElementById('modal').classList.add('hidden'); document.body.style.overflow = ''; }
+function modalSlide(dir) {
+  mSlide = (mSlide + dir + modalCar.photos.length) % modalCar.photos.length;
+  document.getElementById('modalSlides').style.transform = `translateX(-${mSlide*100}%)`;
+  renderModalDots();
+}
+function renderModalDots() {
+  document.getElementById('modalDots').innerHTML = modalCar.photos.map((_,j) =>
+    `<span class="w-2 h-2 rounded-full cursor-pointer ${j===mSlide?'bg-white':'bg-white/40'}" onclick="modalGoTo(${j})"></span>`).join('');
+}
+function modalGoTo(j) { mSlide=j; document.getElementById('modalSlides').style.transform=`translateX(-${j*100}%)`; renderModalDots(); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// ── Animated counters ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseInt(el.dataset.target);
+    const isDecimal = el.hasAttribute('data-decimal');
+    let start = 0;
+    const duration = 1500;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const val = Math.floor(progress * target);
+      el.textContent = isDecimal ? (val / 10).toFixed(1) : val;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+    observer.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(el => observer.observe(el));
+
+renderCards();
+</script>
+</body>
+</html>
