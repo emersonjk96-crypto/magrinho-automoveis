@@ -216,10 +216,12 @@
 </section>
 
 <!-- ══════════════ LIGHTBOX ══════════════ -->
-<div id="lightbox" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/95" onclick="document.getElementById('lightbox').classList.add('hidden')">
-  <img id="lightboxImg" src="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl" style="max-height:95vh">
-  <button class="absolute top-4 right-4 text-white text-3xl font-bold bg-black/50 w-10 h-10 rounded-full flex items-center justify-center">×</button>
-  <p class="absolute bottom-4 text-gray-400 text-sm">Clique em qualquer lugar para fechar</p>
+<div id="lightbox" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/95">
+  <img id="lightboxImg" src="" class="max-w-full object-contain rounded-lg shadow-2xl" style="max-height:90vh;max-width:90vw">
+  <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-3xl font-bold bg-black/50 hover:bg-black/80 w-10 h-10 rounded-full flex items-center justify-center transition">×</button>
+  <button onclick="lightboxNav(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold transition">‹</button>
+  <button onclick="lightboxNav(1)"  class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold transition">›</button>
+  <p id="lightboxCounter" class="absolute bottom-4 text-gray-400 text-sm"></p>
 </div>
 
 <!-- ══════════════ MODAL ══════════════ -->
@@ -780,7 +782,30 @@ function openModal(i) {
   document.body.style.overflow = 'hidden';
 }
 function closeModal() { document.getElementById('modal').classList.add('hidden'); document.body.style.overflow = ''; }
-function openLightbox(src) { document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').classList.remove('hidden'); }
+
+let lbIdx = 0;
+function openLightbox(src) {
+  lbIdx = modalCar.photos.indexOf(src);
+  if (lbIdx < 0) lbIdx = 0;
+  updateLightbox();
+  document.getElementById('lightbox').classList.remove('hidden');
+}
+function updateLightbox() {
+  document.getElementById('lightboxImg').src = modalCar.photos[lbIdx];
+  document.getElementById('lightboxCounter').textContent = (lbIdx+1) + ' / ' + modalCar.photos.length;
+}
+function lightboxNav(dir) {
+  lbIdx = (lbIdx + dir + modalCar.photos.length) % modalCar.photos.length;
+  updateLightbox();
+}
+function closeLightbox() { document.getElementById('lightbox').classList.add('hidden'); }
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('hidden')) {
+    if (e.key === 'ArrowRight') lightboxNav(1);
+    if (e.key === 'ArrowLeft')  lightboxNav(-1);
+    if (e.key === 'Escape')     closeLightbox();
+  }
+});
 function modalSlide(dir) {
   mSlide = (mSlide + dir + modalCar.photos.length) % modalCar.photos.length;
   document.getElementById('modalSlides').style.transform = `translateX(-${mSlide*100}%)`;
