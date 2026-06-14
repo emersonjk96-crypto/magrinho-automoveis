@@ -231,7 +231,10 @@
   <div class="absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
   <div class="relative bg-gray-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-700">
     <div class="relative bg-black rounded-t-2xl overflow-hidden" style="height:300px">
-      <div id="modalSlides" class="flex h-full transition-transform duration-300"></div>
+      <div id="modalSlides" class="flex h-full" style="transition:transform .35s ease"
+        ontouchstart="mtStart(event)"
+        ontouchmove="mtMove(event)"
+        ontouchend="mtEnd(event)"></div>
       <button onclick="modalSlide(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white w-9 h-9 rounded-full flex items-center justify-center text-xl font-bold transition">‹</button>
       <button onclick="modalSlide(1)"  class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white w-9 h-9 rounded-full flex items-center justify-center text-xl font-bold transition">›</button>
       <div id="modalDots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5"></div>
@@ -649,6 +652,7 @@ function filterCars(type) {
     if (type === 'ate50k') return c.priceNum <= 50000;
     return c.category === type;
   }));
+  startCardAutoplay();
 }
 
 // ── Render cards ──
@@ -665,7 +669,7 @@ function renderCards(list) {
     cardSlideIdx[idx] = 0;
     return '<div class="car-card bg-gray-900 rounded-2xl shadow-md overflow-hidden border border-gray-800 cursor-pointer" onclick="openModal(' + idx + ')">'
       + '<div class="relative overflow-hidden" style="height:210px">'
-      + '<div id="cardSlides' + idx + '" class="flex h-full transition-transform duration-300">'
+      + '<div id="cardSlides' + idx + '" class="flex h-full" style="transition:transform .35s ease" ontouchstart="ctStart(event,' + idx + ')" ontouchmove="ctMove(event,' + idx + ')" ontouchend="ctEnd(event,' + idx + ')">'
       + car.photos.map(function(p){ return '<img src="' + p + '" class="card-img min-w-full" alt="' + car.name + '">'; }).join('')
       + '</div>'
       + '<button onclick="event.stopPropagation();cardSlide(' + idx + ',-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold transition">&#8249;</button>'
@@ -757,9 +761,36 @@ function simularDoModal() {
 function cardSlide(i, dir) {
   const n = cars[i].photos.length;
   cardSlideIdx[i] = (cardSlideIdx[i] + dir + n) % n;
-  document.getElementById('cardSlides'+i).style.transform = `translateX(-${cardSlideIdx[i]*100}%)`;
+  const el = document.getElementById('cardSlides'+i);
+  el.style.transition = 'transform .35s ease';
+  el.style.transform = `translateX(-${cardSlideIdx[i]*100}%)`;
   document.getElementById('cardDots'+i).querySelectorAll('span').forEach((d,j) => {
     d.className = `w-1.5 h-1.5 rounded-full ${j===cardSlideIdx[i]?'bg-white':'bg-white/40'}`;
+  });
+}
+
+// Touch no carrossel dos cards
+let ctX0 = 0;
+function ctStart(e, i) { ctX0 = e.changedTouches[0].clientX; document.getElementById('cardSlides'+i).style.transition = 'none'; }
+function ctMove(e, i) {
+  const dx = e.changedTouches[0].clientX - ctX0;
+  document.getElementById('cardSlides'+i).style.transform = `translateX(calc(-${cardSlideIdx[i]*100}% + ${dx}px))`;
+}
+function ctEnd(e, i) {
+  const dx = e.changedTouches[0].clientX - ctX0;
+  if (Math.abs(dx) > 40) cardSlide(i, dx < 0 ? 1 : -1);
+  else { document.getElementById('cardSlides'+i).style.transition = 'transform .35s ease'; document.getElementById('cardSlides'+i).style.transform = `translateX(-${cardSlideIdx[i]*100}%)`; }
+}
+
+// Auto-play nos cards
+const cardTimers = {};
+function startCardAutoplay() {
+  Object.values(cardTimers).forEach(t => clearInterval(t));
+  document.querySelectorAll('[id^="cardSlides"]').forEach(el => {
+    const i = parseInt(el.id.replace('cardSlides',''));
+    if (!isNaN(i) && cars[i] && cars[i].photos.length > 1) {
+      cardTimers[i] = setInterval(() => { if (document.getElementById('cardSlides'+i)) cardSlide(i, 1); }, 3500);
+    }
   });
 }
 
@@ -808,8 +839,23 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape')     closeLightbox();
   }
 });
+// Touch no carrossel do modal
+let mtX0 = 0;
+function mtStart(e) { mtX0 = e.changedTouches[0].clientX; document.getElementById('modalSlides').style.transition = 'none'; }
+function mtMove(e) {
+  const dx = e.changedTouches[0].clientX - mtX0;
+  document.getElementById('modalSlides').style.transform = `translateX(calc(-${mSlide*100}% + ${dx}px))`;
+}
+function mtEnd(e) {
+  const dx = e.changedTouches[0].clientX - mtX0;
+  document.getElementById('modalSlides').style.transition = 'transform .35s ease';
+  if (Math.abs(dx) > 40) modalSlide(dx < 0 ? 1 : -1);
+  else document.getElementById('modalSlides').style.transform = `translateX(-${mSlide*100}%)`;
+}
+
 function modalSlide(dir) {
   mSlide = (mSlide + dir + modalCar.photos.length) % modalCar.photos.length;
+  document.getElementById('modalSlides').style.transition = 'transform .35s ease';
   document.getElementById('modalSlides').style.transform = `translateX(-${mSlide*100}%)`;
   renderModalDots();
 }
@@ -843,6 +889,7 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll('.counter').forEach(el => observer.observe(el));
 
 renderCards();
+startCardAutoplay();
 </script>
 </body>
 </html>
