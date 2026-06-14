@@ -653,10 +653,12 @@ function renderCards(list) {
       + '</div>'
       + '<p class="text-xs text-gray-500 uppercase font-semibold tracking-wide">Preço</p>'
       + '<p class="text-2xl font-black text-white mb-3">' + car.price + '</p>'
-      + '<div class="flex gap-2">'
-      + '<button onclick="event.stopPropagation();openModal(' + idx + ')" class="flex-1 border border-gray-700 hover:bg-gray-800 text-gray-300 font-semibold py-2 rounded-xl text-sm transition">Ver fotos e detalhes</button>'
+      + '<div class="flex gap-2 mb-2">'
+      + '<button onclick="event.stopPropagation();openModal(' + idx + ')" class="flex-1 border border-gray-700 hover:bg-gray-800 text-gray-300 font-semibold py-2 rounded-xl text-sm transition">Ver detalhes</button>'
       + '<a href="https://wa.me/' + WA + '?text=' + encodeURIComponent('Olá! Tenho interesse no ' + car.name + ' anunciado no site. Pode me passar mais informações?') + '" target="_blank" onclick="event.stopPropagation()" class="flex-1 flex items-center justify-center gap-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-xl text-sm transition">📲 Tenho interesse</a>'
-      + '</div></div></div>';
+      + '</div>'
+      + '<button onclick="event.stopPropagation();simularPreco(' + car.priceNum + ')" class="w-full border border-red-700 hover:bg-red-700 text-red-400 hover:text-white font-semibold py-2 rounded-xl text-sm transition">💰 Simular financiamento deste veículo</button>'
+      + '</div></div>';
   }).join('');
 }
 
@@ -707,13 +709,16 @@ function calcularFinanciamento(preValor) {
 }
 
 let modalCarPrice = 0;
+function simularPreco(preco) {
+  document.getElementById('simValor').value = formatMoney(preco);
+  document.getElementById('simEntrada').value = '';
+  document.getElementById('simResultado').classList.add('hidden');
+  document.querySelector('section.py-14').scrollIntoView({ behavior: 'smooth' });
+}
+
 function simularDoModal() {
   closeModal();
-  document.getElementById('simValor').value = formatMoney(modalCarPrice);
-  document.getElementById('simEntrada').value = '';
-  const sec = document.querySelector('section.py-14');
-  if (sec) sec.scrollIntoView({ behavior: 'smooth' });
-  setTimeout(() => calcularFinanciamento(modalCarPrice), 600);
+  simularPreco(modalCarPrice);
 }
 
 function cardSlide(i, dir) {
