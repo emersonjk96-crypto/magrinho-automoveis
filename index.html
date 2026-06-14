@@ -228,24 +228,29 @@
       <button onclick="closeModal()" class="absolute top-3 right-3 bg-black/50 hover:bg-black/80 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg transition">×</button>
     </div>
     <div class="p-6">
+      <div id="modalBadges" class="flex flex-wrap gap-2 mb-3"></div>
       <h3 id="modalName" class="text-2xl font-black text-white mb-1"></h3>
-      <p id="modalDesc" class="text-gray-400 mb-5 leading-relaxed"></p>
-      <div class="grid grid-cols-3 gap-3 mb-6">
+      <p id="modalDesc" class="text-gray-400 mb-4 leading-relaxed text-sm"></p>
+      <div class="grid grid-cols-3 gap-3 mb-3">
         <div class="bg-gray-800 rounded-xl p-3 text-center border border-gray-700">
           <p class="text-xs text-gray-500 font-semibold uppercase mb-1">Ano</p>
-          <p id="modalYear" class="font-bold text-white"></p>
+          <p id="modalYear" class="font-bold text-white text-sm"></p>
         </div>
         <div class="bg-gray-800 rounded-xl p-3 text-center border border-gray-700">
           <p class="text-xs text-gray-500 font-semibold uppercase mb-1">Quilômetros</p>
-          <p id="modalKm" class="font-bold text-white"></p>
+          <p id="modalKm" class="font-bold text-white text-sm"></p>
         </div>
         <div class="bg-gray-800 rounded-xl p-3 text-center border border-gray-700">
           <p class="text-xs text-gray-500 font-semibold uppercase mb-1">Câmbio</p>
-          <p id="modalTrans" class="font-bold text-white"></p>
+          <p id="modalTrans" class="font-bold text-white text-sm"></p>
         </div>
       </div>
+      <div id="modalSpecs" class="flex flex-wrap gap-2 mb-4"></div>
       <p class="text-xs text-gray-500 uppercase font-semibold tracking-wide mb-1">Preço</p>
-      <p id="modalPrice" class="text-3xl font-black text-white mb-5"></p>
+      <p id="modalPrice" class="text-4xl font-black text-white mb-4"></p>
+      <div class="bg-gray-800 border border-gray-700 rounded-xl p-3 mb-4 text-center text-xs text-gray-400">
+        🛡 Veículo revisado &nbsp;•&nbsp; 📄 Documentação em dia &nbsp;•&nbsp; 🔍 Procedência garantida
+      </div>
       <div class="flex gap-3 flex-col sm:flex-row">
         <a id="modalWa" href="#" target="_blank"
            class="flex-1 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl transition text-lg">
@@ -554,7 +559,9 @@ setInterval(() => heroSlide(1), 5000);
 const cars = [
   {
     name: 'Mitsubishi L200 Triton Sport HPE 2018', year: '2017/2018', km: '164.419 km', trans: 'Automático', price: 'R$ 125.731', priceNum: 125731, category: 'picape',
-    desc: 'Picape 4x4 diesel com câmbio automático, bancos de couro, câmera de ré, ar-condicionado digital, engate de reboque removível, módulo de rebatimento dos retrovisores, sensor de estacionamento e muito mais. IPVA 2026 pago. R$ 10.000 abaixo da tabela FIPE.',
+    badges: ['🔥 Oportunidade', '💥 IPVA Pago', '✔ Revisado'],
+    specs: ['⛽ Diesel', '🚗 4x4', '👥 5 lugares', '🎨 Branca'],
+    desc: '✅ Câmbio automático  ✅ Bancos em couro  ✅ Câmera de ré  ✅ Ar-condicionado digital  ✅ Engate de reboque removível  ✅ Sensor de estacionamento  ✅ IPVA 2026 pago  ✅ R$ 10.000 abaixo da Tabela FIPE',
     photos: [
       'L200/L200-foto-01.jpg',
       'L200/WhatsApp Image 2026-06-14 at 15.49.20.jpeg',
@@ -565,7 +572,14 @@ const cars = [
       'L200/WhatsApp Image 2026-06-14 at 15.49.21 (4).jpeg',
       'L200/WhatsApp Image 2026-06-14 at 15.49.21 (5).jpeg',
       'L200/WhatsApp Image 2026-06-14 at 15.49.22.jpeg',
-      'L200/WhatsApp Image 2026-06-14 at 15.49.22 (1).jpeg'
+      'L200/WhatsApp Image 2026-06-14 at 15.49.22 (1).jpeg',
+      'L200/WhatsApp Image 2026-06-14 at 15.49.22 (2).jpeg',
+      'L200/WhatsApp Image 2026-06-14 at 15.49.22 (3).jpeg',
+      'L200/WhatsApp Image 2026-06-14 at 15.49.22 (4).jpeg',
+      'L200/WhatsApp Image 2026-06-14 at 15.49.22 (5).jpeg',
+      'L200/WhatsApp Image 2026-06-14 at 15.49.23.jpeg',
+      'L200/WhatsApp Image 2026-06-14 at 15.49.23 (1).jpeg',
+      'L200/WhatsApp Image 2026-06-14 at 15.49.23 (2).jpeg'
     ]
   },
   {
@@ -652,6 +666,7 @@ function renderCards(list) {
       + '<span class="absolute top-3 right-3 bg-black/50 text-white text-xs px-2 py-0.5 rounded-full">' + car.photos.length + ' fotos</span>'
       + '</div>'
       + '<div class="p-4">'
+      + (car.badges ? '<div class="flex flex-wrap gap-1 mb-2">' + car.badges.map(function(b){ return '<span class="bg-red-600/20 border border-red-600/40 text-red-400 text-xs font-bold px-2 py-0.5 rounded-full">' + b + '</span>'; }).join('') + '</div>' : '')
       + '<h3 class="font-bold text-lg text-white mb-1">' + car.name + '</h3>'
       + '<div class="flex flex-wrap gap-2 text-gray-400 text-xs mb-3">'
       + '<span class="bg-gray-800 px-2 py-1 rounded-lg">📅 ' + car.year + '</span>'
@@ -748,6 +763,8 @@ function openModal(i) {
   document.getElementById('modalTrans').textContent = modalCar.trans;
   document.getElementById('modalPrice').textContent = modalCar.price;
   modalCarPrice = modalCar.priceNum;
+  document.getElementById('modalBadges').innerHTML = (modalCar.badges||[]).map(b => `<span class="bg-red-600/20 border border-red-600/40 text-red-400 text-xs font-bold px-3 py-1 rounded-full">${b}</span>`).join('');
+  document.getElementById('modalSpecs').innerHTML = (modalCar.specs||[]).map(s => `<span class="bg-gray-800 border border-gray-700 text-gray-300 text-xs px-3 py-1 rounded-full">${s}</span>`).join('');
   document.getElementById('modalWa').href = `https://wa.me/${WA}?text=Olá! Tenho interesse no ${encodeURIComponent(modalCar.name)}. Pode me passar mais informações?`;
   document.getElementById('modalSlides').innerHTML = modalCar.photos.map(p =>
     `<img src="${p}" class="min-w-full h-full object-cover" alt="${modalCar.name}">`).join('');
