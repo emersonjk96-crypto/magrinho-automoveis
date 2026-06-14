@@ -215,6 +215,13 @@
   </div>
 </section>
 
+<!-- ══════════════ LIGHTBOX ══════════════ -->
+<div id="lightbox" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/95" onclick="document.getElementById('lightbox').classList.add('hidden')">
+  <img id="lightboxImg" src="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl" style="max-height:95vh">
+  <button class="absolute top-4 right-4 text-white text-3xl font-bold bg-black/50 w-10 h-10 rounded-full flex items-center justify-center">×</button>
+  <p class="absolute bottom-4 text-gray-400 text-sm">Clique em qualquer lugar para fechar</p>
+</div>
+
 <!-- ══════════════ MODAL ══════════════ -->
 <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
   <div class="absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
@@ -230,7 +237,7 @@
     <div class="p-6">
       <div id="modalBadges" class="flex flex-wrap gap-2 mb-3"></div>
       <h3 id="modalName" class="text-2xl font-black text-white mb-1"></h3>
-      <p id="modalDesc" class="text-gray-400 mb-4 leading-relaxed text-sm"></p>
+      <div id="modalDesc" class="text-gray-400 mb-4 text-sm space-y-1"></div>
       <div class="grid grid-cols-3 gap-3 mb-3">
         <div class="bg-gray-800 rounded-xl p-3 text-center border border-gray-700">
           <p class="text-xs text-gray-500 font-semibold uppercase mb-1">Ano</p>
@@ -561,7 +568,7 @@ const cars = [
     name: 'Mitsubishi L200 Triton Sport HPE 2018', year: '2017/2018', km: '164.419 km', trans: 'Automático', price: 'R$ 125.731', priceNum: 125731, category: 'picape',
     badges: ['🔥 Oportunidade', '💥 IPVA Pago', '✔ Revisado'],
     specs: ['⛽ Diesel', '🚗 4x4', '👥 5 lugares', '🎨 Branca'],
-    desc: '✅ Câmbio automático  ✅ Bancos em couro  ✅ Câmera de ré  ✅ Ar-condicionado digital  ✅ Engate de reboque removível  ✅ Sensor de estacionamento  ✅ IPVA 2026 pago  ✅ R$ 10.000 abaixo da Tabela FIPE',
+    desc: '✅ Câmbio automático\n✅ Bancos em couro\n✅ Câmera de ré\n✅ Ar-condicionado digital\n✅ Engate de reboque removível\n✅ Sensor de estacionamento\n✅ IPVA 2026 pago\n✅ R$ 10.000 abaixo da Tabela FIPE',
     photos: [
       'L200/L200-foto-01.jpg',
       'L200/WhatsApp Image 2026-06-14 at 15.49.20.jpeg',
@@ -757,7 +764,7 @@ let modalCar = null, mSlide = 0;
 function openModal(i) {
   modalCar = cars[i]; mSlide = 0;
   document.getElementById('modalName').textContent = modalCar.name;
-  document.getElementById('modalDesc').textContent = modalCar.desc;
+  document.getElementById('modalDesc').innerHTML = modalCar.desc.split('\n').map(l => `<p>${l}</p>`).join('');
   document.getElementById('modalYear').textContent = modalCar.year;
   document.getElementById('modalKm').textContent = modalCar.km;
   document.getElementById('modalTrans').textContent = modalCar.trans;
@@ -767,12 +774,13 @@ function openModal(i) {
   document.getElementById('modalSpecs').innerHTML = (modalCar.specs||[]).map(s => `<span class="bg-gray-800 border border-gray-700 text-gray-300 text-xs px-3 py-1 rounded-full">${s}</span>`).join('');
   document.getElementById('modalWa').href = `https://wa.me/${WA}?text=Olá! Tenho interesse no ${encodeURIComponent(modalCar.name)}. Pode me passar mais informações?`;
   document.getElementById('modalSlides').innerHTML = modalCar.photos.map(p =>
-    `<img src="${p}" class="min-w-full h-full object-cover" alt="${modalCar.name}">`).join('');
+    `<img src="${p}" class="min-w-full h-full object-cover cursor-zoom-in" alt="${modalCar.name}" onclick="openLightbox(this.src)">`).join('');
   renderModalDots();
   document.getElementById('modal').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 }
 function closeModal() { document.getElementById('modal').classList.add('hidden'); document.body.style.overflow = ''; }
+function openLightbox(src) { document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').classList.remove('hidden'); }
 function modalSlide(dir) {
   mSlide = (mSlide + dir + modalCar.photos.length) % modalCar.photos.length;
   document.getElementById('modalSlides').style.transform = `translateX(-${mSlide*100}%)`;
