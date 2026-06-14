@@ -396,14 +396,20 @@
           <div><p class="text-gray-500 uppercase text-xs font-semibold mb-1">Prazo</p><p id="resPrazo" class="text-white font-bold"></p></div>
         </div>
         <div class="border-t border-gray-700 pt-4 mb-4">
-          <p class="text-gray-400 text-sm mb-1">Taxa estimada: 2,00% ao mês</p>
-          <p class="text-3xl font-black text-white">Parcela: <span id="resParcela" class="text-red-500"></span><span class="text-lg font-normal text-gray-400">/mês</span></p>
+          <p class="text-gray-500 text-sm mb-3">Taxa utilizada nesta simulação: 2,00% ao mês (valor ilustrativo).</p>
+          <div class="bg-red-600/10 border border-red-600/30 rounded-xl p-4 text-center">
+            <p class="text-gray-400 text-sm mb-1">Parcela estimada</p>
+            <p class="text-5xl font-black text-red-500" id="resParcela"></p>
+            <p class="text-gray-400 text-sm mt-1">por mês</p>
+          </div>
+        </div>
+        <div class="bg-yellow-900/20 border border-yellow-700/30 rounded-xl p-3 mb-4">
+          <p class="text-yellow-500/80 text-xs text-center">⚠️ Esta simulação é apenas uma estimativa. O valor final das parcelas pode variar conforme a análise de crédito, instituição financeira e condições de financiamento.</p>
         </div>
         <a id="simWaBtn" href="#" target="_blank"
            class="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition">
-          📲 Gostei! Quero uma proposta personalizada no WhatsApp
+          📲 Solicitar proposta real no WhatsApp
         </a>
-        <p class="text-gray-600 text-xs mt-3 text-center">Simulação meramente ilustrativa. Taxas, parcelas e aprovação dependem da análise de crédito e das condições da instituição financeira.</p>
       </div>
     </div>
   </div>
@@ -692,7 +698,7 @@ function calcularFinanciamento(preValor) {
   document.getElementById('resPrazo').textContent      = meses + ' meses';
   document.getElementById('resParcela').textContent    = formatMoney(parcela);
 
-  const msg = 'Olá! Fiz uma simulação no site: veículo de ' + formatMoney(valor) + ', entrada de ' + formatMoney(entrada) + ', prazo de ' + meses + ' meses. Parcela estimada de ' + formatMoney(parcela) + '/mês. Gostaria de uma proposta personalizada!';
+  const msg = 'Olá! Fiz uma simulação no site.\n\nVeículo: ' + formatMoney(valor) + '\nEntrada: ' + formatMoney(entrada) + '\nValor financiado: ' + formatMoney(financiado) + '\nPrazo: ' + meses + ' meses\nParcela estimada: ' + formatMoney(parcela) + '/mês\n\nGostaria de receber uma proposta personalizada.';
   document.getElementById('simWaBtn').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
 
   const res = document.getElementById('simResultado');
